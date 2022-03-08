@@ -1,0 +1,71 @@
+[
+  {
+    "Id": -1
+  },
+  {
+    "Id": 0,
+    "name": "",
+    "type": "geo",
+    "parentNodeContext": "node",
+    "parentNodeId": -1,
+    "parms": [
+      {
+        "name": "tx",
+        "value": 5.5,
+        "oneTimeExperession": false
+      }
+    ],
+    "inputs": [],
+    "operations": {
+      "selected": false,
+      "forceSelected": false,
+      "displayed": true,
+      "rendered": false,
+      "framed": false
+    }
+  },
+  {
+    "Id": 1,
+    "name": "",
+    "type": "grid",
+    "parentNodeContext": "node",
+    "parentNodeId": 0,
+    "parms": [
+      {
+        "name": "rows",
+        "value": "ch(\"cols\")",
+        "oneTimeExperession": false
+      }
+    ],
+    "inputs": [],
+    "operations": {
+      "selected": false,
+      "forceSelected": false,
+      "displayed": false,
+      "rendered": false,
+      "framed": false
+    }
+  },
+  {
+    "Id": 2,
+    "name": "triangulate",
+    "type": "divide",
+    "parentNodeContext": "node",
+    "parentNodeId": 0,
+    "parms": [],
+    "inputs": [
+      {
+        "inputId": 0,
+        "nodeId": 1,
+        "outputId": 0
+      }
+    ],
+    "operations": {
+      "selected": false,
+      "forceSelected": false,
+      "displayed": true,
+      "rendered": true,
+      "framed": true
+    }
+  }
+]
