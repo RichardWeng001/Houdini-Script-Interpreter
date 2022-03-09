@@ -4,47 +4,30 @@
   },
   {
     "id": 0,
-    "name": "",
     "type": "geo",
     "parentNodeContext": "parent",
     "parentNodeId": -1,
     "parms": [
       {
         "name": "tx",
-        "value": 5.5,
-        "oneTimeExperession": false
+        "value": 5.5
       }
     ],
-    "inputs": [],
     "operations": {
-      "selected": false,
-      "forceSelected": false,
-      "displayed": true,
-      "rendered": false,
-      "framed": false
+      "displayed": true
     }
   },
   {
     "id": 1,
-    "name": "",
     "type": "grid",
     "parentNodeContext": "node",
     "parentNodeId": 0,
     "parms": [
       {
         "name": "rows",
-        "value": "ch(\"cols\")",
-        "oneTimeExperession": false
+        "value": "ch(\"cols\")"
       }
-    ],
-    "inputs": [],
-    "operations": {
-      "selected": false,
-      "forceSelected": false,
-      "displayed": false,
-      "rendered": false,
-      "framed": false
-    }
+    ]
   },
   {
     "id": 2,
@@ -52,17 +35,12 @@
     "type": "divide",
     "parentNodeContext": "node",
     "parentNodeId": 0,
-    "parms": [],
     "inputs": [
       {
-        "inputId": 0,
-        "nodeId": 1,
-        "outputId": 0
+        "nodeId": 1
       }
     ],
     "operations": {
-      "selected": false,
-      "forceSelected": false,
       "displayed": true,
       "rendered": true,
       "framed": true
