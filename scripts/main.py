@@ -4,7 +4,6 @@ import json
 import toolutils as tu
 
 home = hou.homeHoudiniDirectory()
-debug = True
 
 jpath = f'{home}\\packages\\hou_interpreter\\demo.json'
 
@@ -40,12 +39,13 @@ for jdata in jdatas:
                 par_node = nodes[jdata['parentNodeId']]
         else:
             par_node = hou.node(context)
-        if debug:
-            print(par_node)
 
         #create node
         node_type = jdata.get('type', 'null')
-        node = par_node.createNode(node_type)
+        try:
+            node = par_node.createNode(node_type)
+        except:
+            node = hou.node('/obj').createNode(node_type)
 
         #rename node
         if jdata['name'] != '':
@@ -86,5 +86,3 @@ for jdata in jdatas:
     
     #add to dict
     nodes[jdata['id']] = node
-    if debug:
-        print(nodes)
