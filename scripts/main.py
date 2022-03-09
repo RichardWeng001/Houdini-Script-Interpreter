@@ -5,7 +5,7 @@ import toolutils as tu
 
 home = hou.homeHoudiniDirectory()
 
-jpath = f'{home}\\packages\\demo.json'
+jpath = f'{home}\\packages\\hou_interpreter\\demo.json'
 
 def loadJson(path: str):
     if os.path.exists(path) and path.endswith('.json'):
