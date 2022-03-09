@@ -24,19 +24,21 @@ jdatas = loadJson(jpath)
 selected_nodes = hou.selectedNodes()
 
 for jdata in jdatas:
-    if jdata['id'] >= 0:
+    nodeId = jdata.get('id')
+    if nodeId >= 0:
         #init parent node
-        context = jdata['parentNodeContext']
+        context = jdata.get('parentNodeContext', 'obj')
+        context_nodeId = jdata.get('parentNodeId', 0)
         par_node = None
         if context == 'node':
-            par_node = nodes[jdata['parentNodeId']]
+            par_node = nodes.get(context_nodeId)
         elif context == 'dopnet':
             par_node = hou.currentDopNet()
         elif context == 'parent':
             try:
-                par_node = nodes[jdata['parentNodeId']].parent()
+                par_node = nodes.get(context_nodeId).parent()
             except:
-                par_node = nodes[jdata['parentNodeId']]
+                par_node = nodes.get(context_nodeId)
         else:
             par_node = hou.node(context)
 
@@ -48,41 +50,46 @@ for jdata in jdatas:
             node = hou.node('/obj').createNode(node_type)
 
         #rename node
-        if jdata['name'] != '':
-            node.setName(jdata['name'])
+        if jdata.get('name', '') != '':
+            node.setName(jdata.get('name'))
 
         #set node parms
-        for jparm in jdata['parms']:
-            parm = node.parm(jparm['name'])
+        for jparm in jdata.get('parms', []):
+            parm = node.parm(jparm.get('name'))
             try:
-                parm.set(jparm['value'])
+                parm.set(jparm.get('value'))
             except:
-                parm.setExpression(jparm['value'])
-            if jparm['oneTimeExperession']:
+                parm.setExpression(jparm.get('value'))
+            if jparm.get('oneTimeExperession', False):
                 parm.deleteAllKeyframes()
 
         #set node inputs
-        for jinput in jdata['inputs']:
-            inputId = jinput['inputId']
-            inputNode = nodes[jinput['nodeId']]
-            outputId = jinput['outputId']
+        for jinput in jdata.get('inputs', []):
+            inputId = jinput.get('inputId', 0)
+            inputNode = nodes.get(jinput.get('nodeId'))
+            outputId = jinput.get('outputId', 0)
             node.setInput(inputId, inputNode, outputId)
 
         #node operations
-        ops = jdata['operations']
-        node.setSelected(ops['selected'], ops['forceSelected'])
-        node.setGenericFlag(hou.nodeFlag.Display, ops['displayed'])
-        node.setGenericFlag(hou.nodeFlag.Render, ops['rendered'])
-        if ops['framed']:
+        ops = jdata.get('operations', {})
+        selected = ops.get('selected', False)
+        forceSelected = ops.get('forceSelected', False)
+        displayed = ops.get('displayed', False)
+        rendered = ops.get('rendered', False)
+        framed = ops.get('framed', False)
+        node.setSelected(selected, forceSelected)
+        node.setGenericFlag(hou.nodeFlag.Display, displayed)
+        node.setGenericFlag(hou.nodeFlag.Render, rendered)
+        if framed:
             ne = tu.networkEditor()
             ne.setCurrentNode(node)
         node.moveToGoodPosition()
     else:
-        if len(selected_nodes) >= -jdata['id']:
-            node = selected_nodes[-jdata['id'] - 1]
+        if len(selected_nodes) >= -nodeId:
+            node = selected_nodes[-nodeId - 1]
         else:
             ne = tu.networkEditor()
             node = ne.currentNode()
     
     #add to dict
-    nodes[jdata['id']] = node
+    nodes[nodeId] = node
