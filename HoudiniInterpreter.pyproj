@@ -29,6 +29,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="demos\demo.json" />
+    <Content Include="LICENSE" />
+    <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
