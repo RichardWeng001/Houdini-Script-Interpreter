@@ -76,7 +76,7 @@ for jdata in jdatas:
     else:
         node = None
         if len(selected_nodes) >= -jdata['id']:
-            node = selected_nodes[-jdata['id']]
+            node = selected_nodes[-jdata['id'] - 1]
         else:
             ne = tu.networkEditor()
             node = ne.currentNode().parent()
