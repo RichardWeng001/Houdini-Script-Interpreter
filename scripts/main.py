@@ -35,6 +35,8 @@ for jdata in jdatas:
             par_node = nodes[jdata['parentNodeId']]
         elif context == 'dopnet':
             par_node = hou.currentDopNet()
+        elif context == 'parent':
+            par_node = nodes[jdata['parentNodeId']].parent()
         else:
             par_node = hou.node(context)
 

@@ -6,7 +6,7 @@
     "id": 0,
     "name": "",
     "type": "geo",
-    "parentNodeContext": "node",
+    "parentNodeContext": "parent",
     "parentNodeId": -1,
     "parms": [
       {
