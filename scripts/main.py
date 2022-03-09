@@ -21,10 +21,7 @@ nodes = {}
 jdatas = loadJson(jpath)
 
 #init selection nodes
-counter = -1
-for node in hou.selectedNodes():
-    nodes[counter] = node
-    counter -= 1
+selected_nodes = hou.selectedNodes()
 
 for jdata in jdatas:
     if jdata['id'] >= 0:
@@ -75,4 +72,12 @@ for jdata in jdatas:
         node.moveToGoodPosition()
 
         #add to dict
+        nodes[jdata['id']] = node
+    else:
+        node = None
+        if len(selected_nodes) >= -jdata['id']:
+            node = selected_nodes[-jdata['id']]
+        else:
+            ne = tu.networkEditor()
+            node = ne.currentNode().parent()
         nodes[jdata['id']] = node
