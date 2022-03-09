@@ -43,6 +43,8 @@ for jdata in jdatas:
 
         #create node
         node_type = jdata.get('type', 'null')
+        if debug:
+            print(node_type)
         node = par_node.createNode(node_type)
 
         #rename node
