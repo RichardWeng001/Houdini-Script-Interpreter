@@ -4,6 +4,7 @@ import json
 import toolutils as tu
 
 home = hou.homeHoudiniDirectory()
+debug = True
 
 jpath = f'{home}\\packages\\hou_interpreter\\demo.json'
 
@@ -33,12 +34,16 @@ for jdata in jdatas:
         elif context == 'dopnet':
             par_node = hou.currentDopNet()
         elif context == 'parent':
-            par_node = nodes[jdata['parentNodeId']].parent()
+            try:
+                par_node = nodes[jdata['parentNodeId']].parent()
+            except:
+                par_node = nodes[jdata['parentNodeId']]
         else:
             par_node = hou.node(context)
 
         #create node
-        node = par_node.createNode(jdata['type'])
+        node_type = jdata.get('type', 'null')
+        node = par_node.createNode(node_type)
 
         #rename node
         if jdata['name'] != '':
@@ -70,14 +75,14 @@ for jdata in jdatas:
             ne = tu.networkEditor()
             ne.setCurrentNode(node)
         node.moveToGoodPosition()
-
-        #add to dict
-        nodes[jdata['id']] = node
     else:
-        node = None
         if len(selected_nodes) >= -jdata['id']:
             node = selected_nodes[-jdata['id'] - 1]
         else:
             ne = tu.networkEditor()
-            node = ne.currentNode().parent()
-        nodes[jdata['id']] = node
+            node = ne.currentNode()
+    
+    #add to dict
+    nodes[jdata['id']] = node
+    if debug:
+        print(nodes)
