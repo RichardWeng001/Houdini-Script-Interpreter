@@ -3,13 +3,9 @@ import os
 import json
 import toolutils as tu
 
-doc = hou.hscriptStringExpression('$HOME')   
-tup_ver = hou.applicationVersion()
-maj_ver = tup_ver[0]
-min_ver = tup_ver[1]
-hou_folder = 'houdini{}.{}'.format(maj_ver, min_ver)
+home = hou.homeHoudiniDirectory()
 
-jpath = '{}\\{}\\packages\\test.json'.format(doc, hou_folder)
+jpath = f'{home}\\packages\\demo.json'
 
 def loadJson(path: str):
     if os.path.exists(path) and path.endswith('.json'):
@@ -18,6 +14,8 @@ def loadJson(path: str):
         fdata = os.read(fd, fsize)
         os.close(fd)
         return json.loads(fdata.decode())
+    else:
+        raise FileNotFoundError(path)
 
 nodes = {}
 jdatas = loadJson(jpath)
@@ -29,7 +27,7 @@ for node in hou.selectedNodes():
     counter -= 1
 
 for jdata in jdatas:
-    if jdata['Id'] >= 0:
+    if jdata['id'] >= 0:
         #init parent node
         context = jdata['parentNodeContext']
         par_node = None
@@ -59,7 +57,10 @@ for jdata in jdatas:
 
         #set node inputs
         for jinput in jdata['inputs']:
-            node.setInput(jinput['inputId'], nodes[jinput['nodeId']], jinput['outputId'])
+            inputId = jinput['inputId']
+            inputNode = nodes[jinput['nodeId']]
+            outputId = jinput['outputId']
+            node.setInput(inputId, inputNode, outputId)
 
         #node operations
         ops = jdata['operations']
@@ -72,4 +73,4 @@ for jdata in jdatas:
         node.moveToGoodPosition()
 
         #add to dict
-        nodes[jdata['Id']] = node
+        nodes[jdata['id']] = node

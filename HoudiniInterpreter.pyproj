@@ -4,8 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>585bd02c-1118-4361-ac6a-c5ef5fd50bc0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>scripts\copy_json_files.py</StartupFile>
     <SearchPath>..\..\..\..\..\Program Files\Side Effects Software\Houdini 19.0.383\houdini\python3.7libs</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -21,14 +20,17 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="scripts\copy_json_files.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="scripts\main.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="scripts\" />
-    <Folder Include="demos\" />
+    <Folder Include="jsons\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="demos\demo.json" />
+    <Content Include="jsons\demo.json" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />
   </ItemGroup>

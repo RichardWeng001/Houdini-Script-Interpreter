@@ -1,9 +1,9 @@
 [
   {
-    "Id": -1
+    "id": -1
   },
   {
-    "Id": 0,
+    "id": 0,
     "name": "",
     "type": "geo",
     "parentNodeContext": "node",
@@ -25,7 +25,7 @@
     }
   },
   {
-    "Id": 1,
+    "id": 1,
     "name": "",
     "type": "grid",
     "parentNodeContext": "node",
@@ -47,7 +47,7 @@
     }
   },
   {
-    "Id": 2,
+    "id": 2,
     "name": "triangulate",
     "type": "divide",
     "parentNodeContext": "node",
