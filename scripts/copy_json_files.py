@@ -1,6 +1,5 @@
 import os
 
-#a custom environment variable
 #hou.homeHoudiniDirectory() value
 home_path = 'C:\\Users\\dell\\Documents\\houdini19.0'
 
