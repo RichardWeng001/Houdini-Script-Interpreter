@@ -9,7 +9,6 @@ source_dir_path = f'{os.getcwd()}\\jsons\\'
 
 for file in os.listdir(source_dir_path):
     if file.endswith('.json'):
-        #json file
         try:
             source_path = source_dir_path + file
             target_path = target_dir_path + file
@@ -20,7 +19,7 @@ for file in os.listdir(source_dir_path):
             tar_fd = os.open(target_path, os.O_RDWR|os.O_CREAT)
             os.write(tar_fd, data)
             os.close(tar_fd)
-            print(f'{file} copyed!')
+            print(f'{file} copied!')
         except:
             raise OSError(source_path, target_path)
 
