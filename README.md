@@ -1,14 +1,11 @@
 # Houdini Interpreter
-
+------
 A method to make quick Houdini python scripts by `json` files.
 
 ## Structure
-
 > **Node** `list`.
-
 ### Node
 #### `id`: `int` 
-
 - **Essential**.
 - Negative `id` stands for the `-id` component in the current **selected** nodes.
 - As two same `id` occurs, the new one will **overwrite** the previous one.
@@ -30,29 +27,30 @@ A method to make quick Houdini python scripts by `json` files.
 - **Essential**.
 ##### `value`: `any` 
 - **Essential**.
-- Allow `int`, `float`, `bool` and `str`
-- `oneTimeExperession`: `bool`, default `false`
+- Allow `int`, `float`, `bool` and `str`.
+##### `oneTimeExperession`: `bool`
+- Default `false`.
 #### `inputs`: `list` of:
 ##### `nodeId`: `int`
 - **Essential**.
 - Negative `nodeId` for `spare inputs`.
 ##### `inputId`: `int`
-- default `0`.
+- Default `0`.
 ##### `outputId`: `int`
-- default `0`.
+- Default `0`.
 #### `operations`: `dict` of:
 ##### `selected`: `bool`
 - Default `false`. 
 - If `true`, this node will **append** to the selection.
 ##### `forceSelected`: `bool`
-- default `false`. 
+- Default `false`. 
 - If `true`, previous selection will be **deleted**.
 ##### `displayed`: `bool`
-- default `false`. 
+- Default `false`. 
 - If `true`, set **display** flag enabled.
 ##### `rendered`: `bool`
-- default `false`. 
+- Default `false`. 
 - If `true`, set **render** flag enabled.
 ##### `framed`: `bool`
-- default `false`. 
+- Default `false`. 
 - If `true`, focus this node in **Network Editor**.
