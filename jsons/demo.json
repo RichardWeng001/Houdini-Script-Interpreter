@@ -38,6 +38,10 @@
     "inputs": [
       {
         "nodeId": 1
+      },
+      {
+        "inputId": -1,
+        "nodeId": 1
       }
     ],
     "operations": {

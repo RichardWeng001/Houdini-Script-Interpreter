@@ -43,11 +43,8 @@ for jdata in jdatas:
             par_node = hou.node(context)
 
         #create node
-        node_type = jdata.get('type', 'null')
-        try:
-            node = par_node.createNode(node_type)
-        except:
-            node = hou.node('/obj').createNode(node_type)
+        node_type = jdata.get('type')
+        node = par_node.createNode(node_type)
 
         #rename node
         if jdata.get('name', '') != '':
@@ -60,15 +57,36 @@ for jdata in jdatas:
                 parm.set(jparm.get('value'))
             except:
                 parm.setExpression(jparm.get('value'))
-            if jparm.get('oneTimeExperession', False):
-                parm.deleteAllKeyframes()
+            finally:
+                if jparm.get('oneTimeExperession', False):
+                    parm.deleteAllKeyframes()
 
         #set node inputs
         for jinput in jdata.get('inputs', []):
             inputId = jinput.get('inputId', 0)
             inputNode = nodes.get(jinput.get('nodeId'))
-            outputId = jinput.get('outputId', 0)
-            node.setInput(inputId, inputNode, outputId)
+            if inputId >= 0:
+                outputId = jinput.get('outputId', 0)
+                node.setInput(inputId, inputNode, outputId)
+            else:
+                #spare input
+
+                #init parm
+                nSpareInput = -inputId - 1
+                spareInputName = f'spare_input{nSpareInput}'
+                spareInputLabel = f'Spare Input {nSpareInput}'
+                spareInputTags = {'cook_dependent': '1', 'opfilter': '!!SOP!!', 'oprelative': '.'}
+                spareInputHelp = f'Refer to this in expressions as {inputId}, such as: npoints({inputId})'
+                spareInputTemplate = hou.StringParmTemplate(spareInputName, spareInputLabel, 1)
+                spareInputTemplate.setStringType(hou.stringParmType.NodeReference)
+                spareInputTemplate.setDefaultValue(('', ))
+                spareInputTemplate.setTags(spareInputTags)
+                spareInputTemplate.setHelp(spareInputHelp)
+
+                #set parm
+                node.addSpareParmTuple(spareInputTemplate)
+                relativePath = node.relativePathTo(inputNode)
+                node.parm(spareInputName).set(relativePath)
 
         #node operations
         ops = jdata.get('operations', {})
@@ -90,6 +108,11 @@ for jdata in jdatas:
         else:
             ne = tu.networkEditor()
             node = ne.currentNode()
+        
+        #filter node
+        node_type = jdata.get('type', '')
+        if node.type().name() != node_type and node_type != '':
+            raise hou.NodeError()
     
     #add to dict
     nodes[nodeId] = node
