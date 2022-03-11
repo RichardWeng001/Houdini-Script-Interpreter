@@ -6,6 +6,7 @@ import toolutils as tu
 home = hou.homeHoudiniDirectory()
 
 jpath = f'{home}\\packages\\hou_interpreter\\demo.json'
+tpath = f'{home}\\packages\\hou_interpreter\\texts.json'
 
 def loadJson(path: str):
     if os.path.exists(path) and path.endswith('.json'):
@@ -19,6 +20,7 @@ def loadJson(path: str):
 
 nodes = {}
 jdatas = loadJson(jpath)
+tdatas = loadJson(tpath)
 
 #init selection nodes
 selected_nodes = hou.selectedNodes()
@@ -70,13 +72,14 @@ for jdata in jdatas:
                 node.setInput(inputId, inputNode, outputId)
             else:
                 #spare input
+                spareInputTexts = tdatas['spare_input']
 
                 #init parm
                 nSpareInput = -inputId - 1
-                spareInputName = f'spare_input{nSpareInput}'
-                spareInputLabel = f'Spare Input {nSpareInput}'
-                spareInputTags = {'cook_dependent': '1', 'opfilter': '!!SOP!!', 'oprelative': '.'}
-                spareInputHelp = f'Refer to this in expressions as {inputId}, such as: npoints({inputId})'
+                spareInputName = spareInputTexts['name'].format(nSpareInput)
+                spareInputLabel = spareInputTexts['label'].format(nSpareInput)
+                spareInputTags = spareInputTexts['tags']
+                spareInputHelp = spareInputTexts['help'].format(nSpareInput)
                 spareInputTemplate = hou.StringParmTemplate(spareInputName, spareInputLabel, 1)
                 spareInputTemplate.setStringType(hou.stringParmType.NodeReference)
                 spareInputTemplate.setDefaultValue(('', ))
