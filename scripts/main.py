@@ -1,12 +1,12 @@
 import hou
 import os
 import json
+import random
 import toolutils as tu
 
 home = hou.homeHoudiniDirectory()
 
 jpath = f'{home}\\packages\\hou_interpreter\\demo.json'
-tpath = f'{home}\\packages\\hou_interpreter\\texts.json'
 
 def loadJson(path: str):
     if os.path.exists(path) and path.endswith('.json'):
@@ -20,7 +20,6 @@ def loadJson(path: str):
 
 nodes = {}
 jdatas = loadJson(jpath)
-tdatas = loadJson(tpath)
 
 #init selection nodes
 selected_nodes = hou.selectedNodes()
@@ -55,10 +54,28 @@ for jdata in jdatas:
         #set node parms
         for jparm in jdata.get('parms', []):
             parm = node.parm(jparm.get('name'))
+            parmValue = jparm.get('value')
+
+            #format strings
+            pathTypes = ['absolute', 'relative']
+            parmValueType = jparm.get('valueType', 'none')
+            formatedParmValue = parmValue
+            if parmValueType in pathTypes:
+                parmNodeId = jparm.get('nodeId')
+                parmPath = ''
+                if parmValueType == 'absolute':
+                    parmPath = nodes[parmNodeId].path()
+                elif parmValueType == 'relative':
+                    parmPath = nodes[parmNodeId].relativePathTo(node)
+                formatedParmValue = formatedParmValue.format(parmPath)
+            elif parmValueType == 'seed':
+                formatedParmValue.format(random.randint(0, 1000))
+
+            #set parm value
             try:
-                parm.set(jparm.get('value'))
+                parm.set(formatedParmValue)
             except:
-                parm.setExpression(jparm.get('value'))
+                parm.setExpression(formatedParmValue)
             finally:
                 if jparm.get('oneTimeExperession', False):
                     parm.deleteAllKeyframes()
@@ -72,14 +89,18 @@ for jdata in jdatas:
                 node.setInput(inputId, inputNode, outputId)
             else:
                 #spare input
-                spareInputTexts = tdatas['spare_input']
+
+                #init texts
+                nSpareInput = -inputId - 1
+                spareInputTags = {'cook_dependent': '1', 'opfilter': '!!SOP!!', 'oprelative': '.'}
+                spareInputName = 'spare_input{}'.format(nSpareInput)
+                spareInputLabel = 'Spare Input {}'.format(nSpareInput)
+                spareInputHelp = 'Refer to this in expressions as {0}'
+                spareInputHelp += ', '
+                spareInputHelp += 'such as: npoints({0})'
+                spareInputHelp = spareInputHelp.format(inputId)
 
                 #init parm
-                nSpareInput = -inputId - 1
-                spareInputName = spareInputTexts['name'].format(nSpareInput)
-                spareInputLabel = spareInputTexts['label'].format(nSpareInput)
-                spareInputTags = spareInputTexts['tags']
-                spareInputHelp = spareInputTexts['help'].format(nSpareInput)
                 spareInputTemplate = hou.StringParmTemplate(spareInputName, spareInputLabel, 1)
                 spareInputTemplate.setStringType(hou.stringParmType.NodeReference)
                 spareInputTemplate.setDefaultValue(('', ))

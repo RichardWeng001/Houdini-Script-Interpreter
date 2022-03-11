@@ -31,7 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="jsons\demo.json" />
-    <Content Include="jsons\texts.json" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />
   </ItemGroup>

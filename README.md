@@ -30,6 +30,15 @@ A method to make quick Houdini python scripts by `json` files.
 - Allow `int`, `float`, `bool` and `str`.
 ##### `oneTimeExperession`: `bool`
 - Default `false`.
+##### `valueType`: `str`
+- Default `none`
+- Only the following strings are **allowed**:
+	- `none`: No `"{}"` format string.
+	- `absolute`: Absolute path.
+	- `relative`: Relative path.
+	- `seed`: Random Seed.
+##### `nodeId`: `int`
+- **Essential** when `valueType` is `absolute` or `relative`.
 #### `inputs`: `list` of:
 ##### `nodeId`: `int`
 - **Essential**.
