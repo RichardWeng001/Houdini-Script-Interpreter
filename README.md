@@ -1,6 +1,6 @@
-# Houdini Interpreter
+# Houdini Script Interpreter
 ------
-A method to make quick Houdini python scripts by `json` files.
+A method to make **quick** Houdini python scripts by `json` files.
 
 ## Structure
 > **Node** `list`.
