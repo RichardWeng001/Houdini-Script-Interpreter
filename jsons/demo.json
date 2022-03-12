@@ -29,7 +29,7 @@
       },
       {
         "name": "cols",
-        "value": "rint(ch(\"{}/tx\"))",
+        "value": "rint(ch(\"{path}/tx\"))",
         "valueType": "absolute",
         "nodeId": 0
       }
