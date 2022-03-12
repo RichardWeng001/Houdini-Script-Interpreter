@@ -34,9 +34,9 @@ A method to make **quick** Houdini python scripts by `json` files.
 - Default `none`
 - Only the following strings are **allowed**:
 	- `none`: No `"{}"` format string.
-	- `absolute`: Absolute path.
-	- `relative`: Relative path.
-	- `seed`: Random Seed.
+	- `absolute`: Absolute path. (`{path}`)
+	- `relative`: Relative path. (`{path}`)
+	- `seed`: Random Seed. (`{seed}`)
 ##### `nodeId`: `int`
 - **Essential** when `valueType` is `absolute` or `relative`.
 #### `inputs`: `list` of:

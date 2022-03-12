@@ -73,7 +73,7 @@ for jdata in jdatas:
                     parmPath = nodes[parmNodeId].relativePathTo(node)
                 formatedParmValue = formatedParmValue.format(path = parmPath)
             elif parmValueType == 'seed':
-                formatedParmValue.format(random.randint(0, 1000))
+                formatedParmValue.format(seed = random.randint(0, 1000))
 
             #set parm value
             try:
