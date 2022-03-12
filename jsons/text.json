@@ -1,0 +1,12 @@
+{
+  "spare_input": {
+    "name": "spare_input{}",
+    "help": "Refer to this in expressions as {0}, such as: npoints({0})",
+    "label": "Spare Input {}",
+    "tags": {
+      "cook_dependent": "1",
+      "opfilter": "!!SOP!!",
+      "oprelative": "."
+    }
+  }
+}

@@ -7,6 +7,7 @@ import toolutils as tu
 home = hou.homeHoudiniDirectory()
 
 jpath = f'{home}\\packages\\hou_interpreter\\demo.json'
+tpath = f'{home}\\packages\\hou_interpreter\\text.json'
 
 def loadJson(path: str):
     if os.path.exists(path) and path.endswith('.json'):
@@ -20,6 +21,9 @@ def loadJson(path: str):
 
 nodes = {}
 jdatas = loadJson(jpath)
+tdatas = loadJson(tpath)
+
+spare_input_text = tdatas['spare_input']
 
 #init selection nodes
 selected_nodes = hou.selectedNodes()
@@ -92,13 +96,10 @@ for jdata in jdatas:
 
                 #init texts
                 nSpareInput = -inputId - 1
-                spareInputTags = {'cook_dependent': '1', 'opfilter': '!!SOP!!', 'oprelative': '.'}
-                spareInputName = 'spare_input{}'.format(nSpareInput)
-                spareInputLabel = 'Spare Input {}'.format(nSpareInput)
-                spareInputHelp = 'Refer to this in expressions as {0}'
-                spareInputHelp += ', '
-                spareInputHelp += 'such as: npoints({0})'
-                spareInputHelp = spareInputHelp.format(inputId)
+                spareInputTags = spare_input_text['tags']
+                spareInputName = spare_input_text['name'].format(nSpareInput)
+                spareInputLabel = spare_input_text['label'].format(nSpareInput)
+                spareInputHelp = spare_input_text['help'].format(inputId)
 
                 #init parm
                 spareInputTemplate = hou.StringParmTemplate(spareInputName, spareInputLabel, 1)
