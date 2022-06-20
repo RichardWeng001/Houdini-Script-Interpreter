@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>585bd02c-1118-4361-ac6a-c5ef5fd50bc0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>scripts\copy_json_files.py</StartupFile>
+    <StartupFile>scripts\main.py</StartupFile>
     <SearchPath>..\..\..\..\..\Program Files\Side Effects Software\Houdini 19.0.383\houdini\python3.7libs</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
