@@ -1,7 +1,7 @@
 import os
 
 #hou.homeHoudiniDirectory() value
-home_path = 'C:\\Users\\dell\\Documents\\houdini19.0'
+home_path = 'C:\\Users\\%YOUR_USERNAME_HERE%\\Documents\\houdini19.0'
 
 target_dir_path = f'{home_path}\\packages\\hou_interpreter\\'
 
